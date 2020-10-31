@@ -2,7 +2,10 @@ import commands from "./commands.js"; // gere la reponse aux commandes
 
 document.addEventListener("DOMContentLoaded", function () {
 	let terminalInput = document.getElementById("input");
-	terminalInput.setAttribute("name", Math.random().toString(36).substr(0, 420000000));
+	terminalInput.setAttribute(
+		"name",
+		Math.random().toString(36).substr(0, 420000000)
+	);
 	let caretDiv = document.getElementById("caret");
 	let inputLeft = terminalInput.offsetLeft;
 	let inputTop = terminalInput.offsetTop;
@@ -53,7 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		caretDiv.style.top = `${inputTop}px`;
 	}
 
-	function browseCaret(key) {//This function listen for keys that should move the caret inside the input value and update caret position and highlighted char
+	function browseCaret(key) {
+		//This function listen for keys that should move the caret inside the input value and update caret position and highlighted char
 		let strLength = terminalInput.value.length;
 		switch (key) {
 			case "ArrowLeft":
@@ -96,36 +100,54 @@ document.addEventListener("DOMContentLoaded", function () {
 	function terminalSubmit() {
 		history.innerHTML += `<div class="terminal">
             <div class="terminal-prefix" id="terminalPrefix">@BrunOS/<span class="croissant">🥐</span>CLI:</div>
-            <div>${input.value}</div>
+            <div>${terminalInput.value}</div>
 		</div>`;
-		let reply = commands(input.value);
+		let reply = commands(terminalInput.value);
 		history.innerHTML += `<div class="terminal">
             <div class="terminal-prefix" id="terminalPrefix">@BrunOS/<span class="croissant">🥐</span>CLI:</div>
             <div>${reply}</div>
 		</div>`;
-		input.value = "";
+		terminalInput.value = "";
+		tempInput = "";
 		caretOffset = 0;
 	}
 	function updateInput(key) {
-		if (caretOffset === 0) {
-			tempInput += key;
-			input.value = tempInput;
-		} else {
+		if (key === "Backspace") {
 			let inputArray = tempInput.split("");
-			inputArray[inputArray.length + caretOffset] = key;
-			tempInput = inputArray.join("");
-			input.value = tempInput;
-			highlight = terminalInput.value.charAt(
-				terminalInput.value.length + caretOffset
-			);
-			caretDiv.innerHTML = highlight;
+			let inputLength = inputArray.length;
+			if (caretOffset === 0) {
+				inputArray.pop(inputLength);
+				tempInput = inputArray.join("");
+				terminalInput.value = tempInput;
+			} else {
+				inputArray.pop(inputLength + caretOffset);
+				tempInput = inputArray.join("");
+				terminalInput.value = tempInput;
+				highlight = terminalInput.value.charAt(
+					terminalInput.value.length + caretOffset
+				);
+				caretDiv.innerHTML = highlight;
+			}
+		} else {
+			if (caretOffset === 0) {
+				tempInput += key;
+				terminalInput.value = tempInput;
+			} else {
+				let inputArray = tempInput.split("");
+				inputArray[inputArray.length + caretOffset] = key;
+				tempInput = inputArray.join("");
+				terminalInput.value = tempInput;
+				highlight = terminalInput.value.charAt(
+					terminalInput.value.length + caretOffset
+				);
+				caretDiv.innerHTML = highlight;
+			}
 		}
 	}
 	document.addEventListener("click", function () {
 		fakeCaret();
 	});
 	document.addEventListener("keydown", function (event) {
-		console.log(event.key + ' ' + event.code);
 		if (
 			importantKeys.indexOf(event.code) === -1 &&
 			importantKeys.indexOf(event.key) === -1
@@ -141,9 +163,6 @@ document.addEventListener("DOMContentLoaded", function () {
 				case "ArrowRight":
 					browseCaret(event.code);
 					break;
-				case "Backspace":
-					browseCaret(event.code);
-					break;
 				case "Delete":
 					browseCaret(event.code);
 					break;
@@ -152,8 +171,10 @@ document.addEventListener("DOMContentLoaded", function () {
 					break;
 			}
 			fakeCaret();
+		} else if (event.code === "Backspace") {
+			updateInput(event.key);
+			browseCaret(event.code);
 		}
-		
 	});
 	document.addEventListener("keyup", function (event) {
 		fakeCaret();
