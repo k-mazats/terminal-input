@@ -62,12 +62,14 @@ document.addEventListener("DOMContentLoaded", function () {
 		if (key !== "Backspace") {
 			switch (key) {
 				case "ArrowLeft":
+					
 					if (caretOffset > 0 - strLength) {
 						caretOffset--;
 						highlight = terminalInput.value.charAt(
 							terminalInput.value.length + caretOffset
 						);
 					}
+					console.log(caretOffset);
 					break;
 				case "ArrowRight":
 					if (caretOffset < 0) {
@@ -91,7 +93,24 @@ document.addEventListener("DOMContentLoaded", function () {
 					break;
 			}
 			caretDiv.innerHTML = highlight;
-		} 
+		}else{
+			if (caretOffset === 0) {
+				caretDiv.innerHTML = "";
+			} else {
+				console.log(
+					`carOff = ${caretOffset} inputlength = ${tempInput.length}`
+				);
+				
+				console.log(`${caretOffset}  ${tempInput.length}`);
+				if(caretOffset < 0 - tempInput.length){
+					caretOffset++;
+				}
+				highlight = terminalInput.value.charAt(
+					terminalInput.value.length + caretOffset
+				);
+				caretDiv.innerHTML = highlight;
+			}
+		}
 	}
 
 	function fakeCaret() {
@@ -118,25 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
 			let inputArray = tempInput.split("");
 			let inputLength = inputArray.length;
 			if (caretOffset === 0) {
-				console.table(inputArray);
 				inputArray.pop();
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
-				caretDiv.innerHTML = "";
 			} else {
 				inputArray.splice(inputLength + caretOffset - 1, 1);
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
-				highlight = terminalInput.value.charAt(
-					terminalInput.value.length + caretOffset
-				);
-				console.log(
-					`carOff = ${caretOffset} inputlength = ${tempInput.length}`
-				);
-				if (caretOffset + tempInput.length === 0) {
-					caretOffset += 1;
-				}
-				caretDiv.innerHTML = highlight;
+				
 			}
 		} else {
 			if (caretOffset === 0) {
@@ -182,6 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 			fakeCaret();
 		} else if (event.code === "Backspace") {
+			event.preventDefault();
 			updateInput(event.key);
 			browseCaret(event.code);
 		}
