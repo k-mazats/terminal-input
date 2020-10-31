@@ -52,7 +52,7 @@ body {
 	outline: none;
 	caret-color: transparent;
 }
-#caret {
+/* #caret {
 	width: 1ch;
 	height: 1em;
 	background: white;
@@ -61,7 +61,7 @@ body {
 	animation-name: clignoter;
 	animation-iteration-count: infinite;
 	transition: none;
-}
+} */
 .croissant {
 	font-size: 0.8em;
 }
