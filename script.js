@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	function browseCaret(key) {
 		//This function listen for keys that should move the caret inside the input value and update caret position and highlighted char
 		let strLength = terminalInput.value.length;
-		switch (key) {
+		if(key !== "Backspace"){switch (key) {
 			case "ArrowLeft":
 				if (caretOffset > 0 - strLength) {
 					caretOffset--;
@@ -88,8 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
 					highlight = "";
 				}
 				break;
+			
 		}
-		caretDiv.innerHTML = highlight;
+		caretDiv.innerHTML = highlight;}
 	}
 
 	function fakeCaret() {
@@ -119,13 +120,18 @@ document.addEventListener("DOMContentLoaded", function () {
 				inputArray.pop(inputLength);
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
+				caretDiv.innerHTML ="";
 			} else {
-				inputArray.pop(inputLength + caretOffset);
+				inputArray.splice(inputLength + caretOffset -1, 1);
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
 				highlight = terminalInput.value.charAt(
 					terminalInput.value.length + caretOffset
 				);
+				console.log(`carOff = ${caretOffset} inputlength = ${tempInput.length}`);
+				if(caretOffset + tempInput.length === 0){
+					caretOffset += 1;
+				}
 				caretDiv.innerHTML = highlight;
 			}
 		} else {
