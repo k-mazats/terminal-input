@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		let highlight;
 		switch (key) {
 			case "ArrowLeft":
-				
 				if (caretOffset > 0 - strLength) {
 					caretOffset--;
 					highlight = terminalInput.value.charAt(
@@ -36,7 +35,17 @@ document.addEventListener("DOMContentLoaded", function () {
 					highlight = terminalInput.value.charAt(
 						terminalInput.value.length + caretOffset
 					);
-				}else{
+				} else {
+					highlight = "";
+				}
+				break;
+			case "Delete":
+				if (caretOffset < 0) {
+					caretOffset++;
+					highlight = terminalInput.value.charAt(
+						terminalInput.value.length + caretOffset
+					);
+				} else {
 					highlight = "";
 				}
 				break;
@@ -75,6 +84,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				browseCaret(event.code);
 				break;
 			case "ArrowRight":
+				browseCaret(event.code);
+				break;
+			case "Delete":
 				browseCaret(event.code);
 				break;
 		}
