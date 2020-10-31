@@ -4,13 +4,17 @@ export default function achievements() {
 	let achievementsNames = ["SCP", "HE'S DOING IT SIDEWAY"];
 
 	for (let j = 0; j < achievementsList.length; j++) {
-		for (let i = 0; i < localStorage.length; i++) {
-			if (localStorage.key(i) === achievementsList[j]) {
-				response.push(achievementsNames[j]);
-			} else {
-				response.push("CLASSIFIED INFORMATION !");
+		if (localStorage.length > 0) {
+			for (let i = 0; i < localStorage.length; i++) {
+				if (localStorage.key(i) === achievementsList[j]) {
+					response.push(achievementsNames[j]);
+				} else {
+					response.push("CLASSIFIED INFORMATION !");
+				}
 			}
-		}
+		}else{
+            response.push("CLASSIFIED INFORMATION !");
+        }
 	}
 
 	return response;
