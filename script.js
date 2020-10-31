@@ -7,8 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		Math.random().toString(36).substr(0, 420000000)
 	);
 	let caretDiv = document.getElementById("caret");
-	let inputLeft = terminalInput.offsetLeft;
-	let inputTop = terminalInput.offsetTop;
+	
 	let history = document.getElementById("terminalHistory");
 	let caretOffset = 0;
 	let highlight;
@@ -45,13 +44,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		"Backspace",
 	];
 	//"MetaLeft",
-	caretDiv.style.left = `${inputLeft}px`;
-	caretDiv.style.top = `${inputTop}px`;
+	
 
 	let tempInput = "";
 
 	function updateCaret() {
+		let inputLeft = terminalInput.offsetLeft;
+		let inputTop = terminalInput.offsetTop;
 		let strLength = terminalInput.value.length;
+		caretDiv.style.left = `${inputLeft}px`;
+		caretDiv.style.top = `${inputTop}px`;
 		caretDiv.style.marginLeft = `${strLength + caretOffset}ch`;
 		caretDiv.style.top = `${inputTop}px`;
 	}
@@ -197,6 +199,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 	document.addEventListener("keyup", function (event) {
 		fakeCaret();
+	});
+	window.addEventListener("resize", function() {
+		updateCaret();
+		console.log("size");
 	});
 
 	fakeCaret();
