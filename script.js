@@ -122,10 +122,12 @@ document.addEventListener("DOMContentLoaded", function () {
             <div>${terminalInput.value}</div>
 		</div>`;
 		let reply = commands(terminalInput.value);
-		history.innerHTML += `<div class="terminal">
-            <div class="terminal-prefix" id="terminalPrefix">@BrunOS/<span class="croissant">🥐</span>CLI:</div>
-            <div>${reply}</div>
-		</div>`;
+		for (let i = 0; i < reply.length; i++) {
+			history.innerHTML += `<div class="terminal">
+            	<div class="terminal-prefix" id="terminalPrefix">@BrunOS/<span class="croissant">🥐</span>CLI:</div>
+				<div>${reply[i]}</div>
+			</div>`;
+		}
 		terminalInput.value = "";
 		tempInput = "";
 		caretOffset = 0;
@@ -150,13 +152,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		} else if (key === "Delete") {
 			let inputArray = tempInput.split("");
 			let inputLength = inputArray.length;
-			if(caretOffset !== 0){
+			if (caretOffset !== 0) {
 				inputArray.splice(inputLength + caretOffset + 1, 1);
 			}
 			tempInput = inputArray.join("");
 			terminalInput.value = tempInput;
-		} 
-		else {
+		} else {
 			if (caretOffset === 0) {
 				tempInput += key;
 				terminalInput.value = tempInput;

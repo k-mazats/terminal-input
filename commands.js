@@ -1,5 +1,6 @@
 import helper from "./commands/helper.js";
-import quote from "./commands/quote.js"
+import quote from "./commands/quote.js";
+import scp from "./commands/scp.js";
 
 export default function commands(input) {
 	let splitInput = input.split(" ");
@@ -11,8 +12,11 @@ export default function commands(input) {
 		case "quote":
 			message = quote(splitInput);
 			break;
+		case "scp":
+			message = scp();
+			break;
 		default:
-			message = `"${input}" n'est pas une commande valide. -? pour plus d'informations.`;
+			message = [`"${input}" n'est pas une commande valide. -? pour plus d'informations.`];
 	}
 	return message;
 }
