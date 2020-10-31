@@ -59,38 +59,39 @@ document.addEventListener("DOMContentLoaded", function () {
 	function browseCaret(key) {
 		//This function listen for keys that should move the caret inside the input value and update caret position and highlighted char
 		let strLength = terminalInput.value.length;
-		if(key !== "Backspace"){switch (key) {
-			case "ArrowLeft":
-				if (caretOffset > 0 - strLength) {
-					caretOffset--;
-					highlight = terminalInput.value.charAt(
-						terminalInput.value.length + caretOffset
-					);
-				}
-				break;
-			case "ArrowRight":
-				if (caretOffset < 0) {
-					caretOffset++;
-					highlight = terminalInput.value.charAt(
-						terminalInput.value.length + caretOffset
-					);
-				} else {
-					highlight = "";
-				}
-				break;
-			case "Delete":
-				if (caretOffset < 0) {
-					caretOffset++;
-					highlight = terminalInput.value.charAt(
-						terminalInput.value.length + caretOffset
-					);
-				} else {
-					highlight = "";
-				}
-				break;
-			
-		}
-		caretDiv.innerHTML = highlight;}
+		if (key !== "Backspace") {
+			switch (key) {
+				case "ArrowLeft":
+					if (caretOffset > 0 - strLength) {
+						caretOffset--;
+						highlight = terminalInput.value.charAt(
+							terminalInput.value.length + caretOffset
+						);
+					}
+					break;
+				case "ArrowRight":
+					if (caretOffset < 0) {
+						caretOffset++;
+						highlight = terminalInput.value.charAt(
+							terminalInput.value.length + caretOffset
+						);
+					} else {
+						highlight = "";
+					}
+					break;
+				case "Delete":
+					if (caretOffset < 0) {
+						caretOffset++;
+						highlight = terminalInput.value.charAt(
+							terminalInput.value.length + caretOffset
+						);
+					} else {
+						highlight = "";
+					}
+					break;
+			}
+			caretDiv.innerHTML = highlight;
+		} 
 	}
 
 	function fakeCaret() {
@@ -117,19 +118,22 @@ document.addEventListener("DOMContentLoaded", function () {
 			let inputArray = tempInput.split("");
 			let inputLength = inputArray.length;
 			if (caretOffset === 0) {
-				inputArray.pop(inputLength);
+				console.table(inputArray);
+				inputArray.pop();
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
-				caretDiv.innerHTML ="";
+				caretDiv.innerHTML = "";
 			} else {
-				inputArray.splice(inputLength + caretOffset -1, 1);
+				inputArray.splice(inputLength + caretOffset - 1, 1);
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
 				highlight = terminalInput.value.charAt(
 					terminalInput.value.length + caretOffset
 				);
-				console.log(`carOff = ${caretOffset} inputlength = ${tempInput.length}`);
-				if(caretOffset + tempInput.length === 0){
+				console.log(
+					`carOff = ${caretOffset} inputlength = ${tempInput.length}`
+				);
+				if (caretOffset + tempInput.length === 0) {
 					caretOffset += 1;
 				}
 				caretDiv.innerHTML = highlight;
