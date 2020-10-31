@@ -1,6 +1,7 @@
 import helper from "./commands/helper.js";
 import quote from "./commands/quote.js";
 import scp from "./commands/scp.js";
+import achievements from "./commands/achievements.js";
 
 export default function commands(input) {
 	let splitInput = input.split(" ");
@@ -15,8 +16,13 @@ export default function commands(input) {
 		case "scp":
 			message = scp();
 			break;
+		case "achievements":
+			message = achievements();
+			break;
 		default:
-			message = [`"${input}" n'est pas une commande valide. -? pour plus d'informations.`];
+			message = [
+				`"${input}" n'est pas une commande valide. -? pour plus d'informations.`,
+			];
 	}
 	return message;
 }
