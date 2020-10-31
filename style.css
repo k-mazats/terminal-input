@@ -18,7 +18,7 @@ body {
 	
 }
 .terminal-wrap {
-	position: relative;
+	
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
@@ -47,6 +47,8 @@ body {
 	border: none;
 	width: 90%;
 	font-size: 1em;
+	position: relative;
+	padding: 0;
 }
 #input:focus {
 	outline: none;
