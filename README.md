@@ -1,7 +1,7 @@
 # terminal-input
 fake terminal project
 
-##how to add commands
+## how to add commands
 
 *Create a `.js` file inside `/commands/`
 *Write your logic here and export it
