@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div>${reply}</div>
 		</div>`;
 		input.value = "";
+		caretOffset = 0;
 	}
 
 	document.addEventListener("click", function () {
