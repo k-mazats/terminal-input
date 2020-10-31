@@ -59,7 +59,24 @@ document.addEventListener("DOMContentLoaded", function () {
 	function browseCaret(key) {
 		//This function listen for keys that should move the caret inside the input value and update caret position and highlighted char
 		let strLength = terminalInput.value.length;
-		if (key !== "Backspace") {
+		if (key === "Backspace") {
+			if (caretOffset === 0) {
+				caretDiv.innerHTML = "";
+			} else {
+				if (caretOffset < 0 - tempInput.length) {
+					caretOffset++;
+				}
+				highlight = terminalInput.value.charAt(
+					terminalInput.value.length + caretOffset
+				);
+				caretDiv.innerHTML = highlight;
+			}
+		} else if (key === "Delete") {
+			if (caretOffset < -1) {
+				console.log(caretOffset);
+				caretOffset++;
+			}
+		} else {
 			switch (key) {
 				case "ArrowLeft":
 					if (caretOffset > 0 - strLength) {
@@ -91,18 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
 					break;
 			}
 			caretDiv.innerHTML = highlight;
-		} else {
-			if (caretOffset === 0) {
-				caretDiv.innerHTML = "";
-			} else {
-				if (caretOffset < 0 - tempInput.length) {
-					caretOffset++;
-				}
-				highlight = terminalInput.value.charAt(
-					terminalInput.value.length + caretOffset
-				);
-				caretDiv.innerHTML = highlight;
-			}
 		}
 	}
 
@@ -142,7 +147,16 @@ document.addEventListener("DOMContentLoaded", function () {
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
 			}
-		} else {
+		} else if (key === "Delete") {
+			let inputArray = tempInput.split("");
+			let inputLength = inputArray.length;
+			if(caretOffset !== 0){
+				inputArray.splice(inputLength + caretOffset + 1, 1);
+			}
+			tempInput = inputArray.join("");
+			terminalInput.value = tempInput;
+		} 
+		else {
 			if (caretOffset === 0) {
 				tempInput += key;
 				terminalInput.value = tempInput;
