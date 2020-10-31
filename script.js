@@ -19,9 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		caretDiv.style.top = `${inputTop}px`;
 	}
 
-	function browseCaret(key) {
+	function browseCaret(key) {//This function listen for keys that should move the caret inside the input value and update caret position and highlighted char
 		let strLength = terminalInput.value.length;
-		
 		switch (key) {
 			case "ArrowLeft":
 				if (caretOffset > 0 - strLength) {
@@ -87,8 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			);
 			caretDiv.innerHTML = highlight;
 		}
-		
-		
 	}
 	document.addEventListener("click", function () {
 		fakeCaret();
