@@ -1,6 +1,6 @@
 # terminal-input
 
-fake terminal project with old school typing mode
+fake terminal project with old school typing mode and hardcoded text answers
 
 ## how to add commands
 
