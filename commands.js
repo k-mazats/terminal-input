@@ -2,6 +2,7 @@ import helper from "./commands/helper.js";
 import quote from "./commands/quote.js";
 import scp from "./commands/scp.js";
 import achievements from "./commands/achievements.js";
+import michel from "./commands/michel.js";
 
 export default function commands(input) {
 	let splitInput = input.split(" ");
@@ -18,6 +19,9 @@ export default function commands(input) {
 			break;
 		case "achievements":
 			message = achievements();
+			break;
+		case "michel":
+			message = michel(splitInput);
 			break;
 		default:
 			message = [
