@@ -19,19 +19,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function browseCaret(key) {
 		let strLength = terminalInput.value.length;
+		let highlight;
 		switch (key) {
 			case "ArrowLeft":
-				if(caretOffset > 0 - strLength){
+				
+				if (caretOffset > 0 - strLength) {
 					caretOffset--;
+					highlight = terminalInput.value.charAt(
+						terminalInput.value.length + caretOffset
+					);
 				}
 				break;
 			case "ArrowRight":
 				if (caretOffset < 0) {
 					caretOffset++;
+					highlight = terminalInput.value.charAt(
+						terminalInput.value.length + caretOffset
+					);
+				}else{
+					highlight = "";
 				}
 				break;
 		}
-		console.log(caretOffset);
+		caretDiv.innerHTML= highlight;
 	}
 
 	function fakeCaret() {

@@ -58,6 +58,7 @@ body {
 	width: 1ch;
 	height: 1em;
 	background: white;
+	color: black;
 	position: absolute;
 	animation-duration: 0.8s;
 	animation-name: clignoter;
