@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		"AltRight",
 		"ControlRight",
 		"ShiftRight",
-		"Backspace"
+		"Backspace",
 	];
 	//"MetaLeft",
 	caretDiv.style.left = `${inputLeft}px`;
@@ -125,7 +125,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		fakeCaret();
 	});
 	document.addEventListener("keydown", function (event) {
-		if (importantKeys.indexOf(event.code) === -1) {
+		console.log(event.key + ' ' + event.code);
+		if (
+			importantKeys.indexOf(event.code) === -1 &&
+			importantKeys.indexOf(event.key) === -1
+		) {
 			event.preventDefault();
 			switch (event.code) {
 				case "Enter":
