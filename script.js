@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		Math.random().toString(36).substr(0, 420000000)
 	);
 	let caretDiv = document.getElementById("caret");
-	
+
 	let history = document.getElementById("terminalHistory");
 	let caretOffset = 0;
 	let highlight;
@@ -41,10 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		"AltRight",
 		"ControlRight",
 		"ShiftRight",
-		"Backspace",
 	];
 	//"MetaLeft",
-	
 
 	let tempInput = "";
 
@@ -64,14 +62,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		if (key !== "Backspace") {
 			switch (key) {
 				case "ArrowLeft":
-					
 					if (caretOffset > 0 - strLength) {
 						caretOffset--;
 						highlight = terminalInput.value.charAt(
 							terminalInput.value.length + caretOffset
 						);
 					}
-					console.log(caretOffset);
 					break;
 				case "ArrowRight":
 					if (caretOffset < 0) {
@@ -95,16 +91,11 @@ document.addEventListener("DOMContentLoaded", function () {
 					break;
 			}
 			caretDiv.innerHTML = highlight;
-		}else{
+		} else {
 			if (caretOffset === 0) {
 				caretDiv.innerHTML = "";
 			} else {
-				console.log(
-					`carOff = ${caretOffset} inputlength = ${tempInput.length}`
-				);
-				
-				console.log(`${caretOffset}  ${tempInput.length}`);
-				if(caretOffset < 0 - tempInput.length){
+				if (caretOffset < 0 - tempInput.length) {
 					caretOffset++;
 				}
 				highlight = terminalInput.value.charAt(
@@ -143,10 +134,13 @@ document.addEventListener("DOMContentLoaded", function () {
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
 			} else {
-				inputArray.splice(inputLength + caretOffset - 1, 1);
+				if (caretOffset === 0 - tempInput.length) {
+					inputArray.splice(0, 1);
+				} else {
+					inputArray.splice(inputLength + caretOffset - 1, 1);
+				}
 				tempInput = inputArray.join("");
 				terminalInput.value = tempInput;
-				
 			}
 		} else {
 			if (caretOffset === 0) {
@@ -184,6 +178,11 @@ document.addEventListener("DOMContentLoaded", function () {
 					browseCaret(event.code);
 					break;
 				case "Delete":
+					updateInput(event.key);
+					browseCaret(event.code);
+					break;
+				case "Backspace":
+					updateInput(event.key);
 					browseCaret(event.code);
 					break;
 				default:
@@ -191,16 +190,12 @@ document.addEventListener("DOMContentLoaded", function () {
 					break;
 			}
 			fakeCaret();
-		} else if (event.code === "Backspace") {
-			event.preventDefault();
-			updateInput(event.key);
-			browseCaret(event.code);
 		}
 	});
 	document.addEventListener("keyup", function (event) {
 		fakeCaret();
 	});
-	window.addEventListener("resize", function() {
+	window.addEventListener("resize", function () {
 		updateCaret();
 		console.log("size");
 	});
