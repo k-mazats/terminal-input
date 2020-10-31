@@ -1,15 +1,17 @@
 import commands from "./commands.js"; // gere la reponse aux commandes
 
 document.addEventListener("DOMContentLoaded", function () {
-	document.execCommand("OverWrite", false, true);
 	let terminalInput = document.getElementById("input");
 	let caretDiv = document.getElementById("caret");
 	let inputLeft = terminalInput.offsetLeft;
 	let inputTop = terminalInput.offsetTop;
 	let history = document.getElementById("terminalHistory");
 	let caretOffset = 0;
+	let highlight;
 	caretDiv.style.left = `${inputLeft}px`;
 	caretDiv.style.top = `${inputTop}px`;
+
+	let tempInput = "";
 
 	function updateCaret() {
 		let strLength = terminalInput.value.length;
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function browseCaret(key) {
 		let strLength = terminalInput.value.length;
-		let highlight;
+		
 		switch (key) {
 			case "ArrowLeft":
 				if (caretOffset > 0 - strLength) {
@@ -50,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				}
 				break;
 		}
-		caretDiv.innerHTML= highlight;
+		caretDiv.innerHTML = highlight;
 	}
 
 	function fakeCaret() {
@@ -71,11 +73,28 @@ document.addEventListener("DOMContentLoaded", function () {
 		input.value = "";
 		caretOffset = 0;
 	}
-
+	function updateInput(key) {
+		if (caretOffset === 0) {
+			tempInput += key;
+			input.value = tempInput;
+		} else {
+			let inputArray = tempInput.split("");
+			inputArray[inputArray.length + caretOffset] = key;
+			tempInput = inputArray.join("");
+			input.value = tempInput;
+			highlight = terminalInput.value.charAt(
+				terminalInput.value.length + caretOffset
+			);
+			caretDiv.innerHTML = highlight;
+		}
+		
+		
+	}
 	document.addEventListener("click", function () {
 		fakeCaret();
 	});
 	document.addEventListener("keydown", function (event) {
+		event.preventDefault();
 		switch (event.code) {
 			case "Enter":
 				terminalSubmit();
@@ -86,8 +105,14 @@ document.addEventListener("DOMContentLoaded", function () {
 			case "ArrowRight":
 				browseCaret(event.code);
 				break;
+			case "Backspace":
+				browseCaret(event.code);
+				break;
 			case "Delete":
 				browseCaret(event.code);
+				break;
+			default:
+				updateInput(event.key);
 				break;
 		}
 		fakeCaret();
