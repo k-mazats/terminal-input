@@ -5,6 +5,9 @@
 	font-family: 'VT323', monospace;
 	color: white;
 }
+html{
+	cursor:none
+}
 body {
 	background: black;
 	margin: 0;
