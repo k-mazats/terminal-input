@@ -8,7 +8,7 @@ export default function quote(splitInput) {
 			case "objet":
 				return [`L'objet c'est compliqué !`];
 			case "php":
-				return [`L'objet c'est pas possible en php`];
+				return [`Php c'est pas fait pour faire de l'objet`];
 		}
 	} else {
 		return [`"quote" attends un argument. "quote -?" pour plus d'informations.`];
