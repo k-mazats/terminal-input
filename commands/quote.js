@@ -5,6 +5,10 @@ export default function quote(splitInput) {
 				return [`On appelle ça une string, désolé les filles !`];
 			case "js":
 				return [`Le js c'est pas fait pour faire de l'objet !`];
+			case "objet":
+				return [`L'objet c'est compliqué !`];
+			case "php":
+				return [`Php c'est pas fait pour faire de l'objet`];
 		}
 	} else {
 		return [`"quote" attends un argument. "quote -?" pour plus d'informations.`];
